@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import * as React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+import 'bulma/css/bulma.min.css';
 import './App.css';
+import Shop from './components/Shop';
+import Cart from './components/Cart';
+import Nav from './components/Nav';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Shop />} />
+        <Route path="cart" element={<Cart />} />
+      </Routes>
     </div>
   );
 }
