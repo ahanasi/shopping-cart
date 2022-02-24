@@ -13,9 +13,9 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
 
   return (
-    <div className="columns is-multiline">
+    <div className="columns is-multiline is-centered">
       {products.map((product) => (
-        <div className="card box column is-2" key={product.id}>
+        <div className="card box column is-2 m-2" key={product.id}>
           <div className="card-image">
             <figure className="image is-3by4">
               <img src={product.image} alt="product.title" />
@@ -29,6 +29,9 @@ const Shop = () => {
               <div>${product.price}</div>
             </div>
           </div>
+          <footer className="card-footer is-flex is-flex-direction-column is-justify-content-end h-100">
+            <button className="card-footer-item">Add to Cart</button>
+          </footer>
         </div>
       ))}
     </div>
