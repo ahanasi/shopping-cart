@@ -11,7 +11,10 @@ const Shop = () => {
     if (typeof cart[productID - 1] !== 'undefined') {
       console.log('exists');
     } else {
-      setCart((prevState) => [...prevState, { id: item.id, title: item.title, quantity: 1 }]);
+      setCart((prevState) => [
+        ...prevState,
+        { id: item.id, title: item.title, price: item.price, quantity: 1 }
+      ]);
     }
   };
 
