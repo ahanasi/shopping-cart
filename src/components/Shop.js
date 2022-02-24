@@ -8,7 +8,7 @@ const Shop = () => {
     const productID = e.target.dataset.id;
     const item = products[productID - 1];
 
-    if (typeof cart[productID - 1] !== 'undefined') {
+    if (cart.some((item) => item.id == productID)) {
       console.log('exists');
     } else {
       setCart((prevState) => [
