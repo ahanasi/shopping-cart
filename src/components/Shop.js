@@ -1,16 +1,37 @@
 import React, { useState, useEffect } from 'react';
 
 const Shop = () => {
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (e) => {
+    const productID = e.target.dataset.id;
+    const item = products[productID - 1];
+
+    if (typeof cart[productID - 1] !== 'undefined') {
+      console.log('exists');
+    } else {
+      setCart((prevState) => [...prevState, { id: item.id, title: item.title, quantity: 1 }]);
+    }
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       const products = await fetch('https://fakestoreapi.com/products').then((res) => res.json());
-
       setProducts(products);
     };
     fetchProducts();
   }, []);
 
-  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    document.addEventListener('click', addToCart);
+
+    return () => {
+      document.removeEventListener('click', addToCart);
+    };
+  }, [addToCart]);
+
+  console.log(cart);
 
   return (
     <div className="columns is-multiline is-centered">
@@ -29,8 +50,10 @@ const Shop = () => {
               <div>${product.price}</div>
             </div>
           </div>
-          <footer className="card-footer is-flex is-flex-direction-column is-justify-content-end h-100">
-            <button className="card-footer-item">Add to Cart</button>
+          <footer className="card-footer">
+            <button className="card-footer-item" data-id={product.id}>
+              Add to Cart
+            </button>
           </footer>
         </div>
       ))}
