@@ -9,7 +9,11 @@ const Shop = () => {
     const item = products[productID - 1];
 
     if (cart.some((item) => item.id == productID)) {
-      console.log('exists');
+      setCart((prevState) =>
+        prevState.map((product) =>
+          product.id == productID ? { ...product, quantity: product.quantity + 1 } : product
+        )
+      );
     } else {
       setCart((prevState) => [
         ...prevState,
