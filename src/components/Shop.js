@@ -83,9 +83,18 @@ const Shop = () => {
               <div>${product.price}</div>
             </div>
           </div>
-          <footer className="card-footer">
-            <input id={product.id} type="number" min="0" step={1} />
-            <button className="card-footer-item addBtn" data-id={product.id}>
+          <footer className="card-footer is-flex is-justify-content-space-between is-align-items-center">
+            <input
+              id={product.id}
+              className="input is-small"
+              type="number"
+              min="0"
+              step={1}
+              width="10"
+            />
+            <button
+              className="card-footer-item addBtn button is-small is-success is-light"
+              data-id={product.id}>
               Add to Cart
             </button>
           </footer>
