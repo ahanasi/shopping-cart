@@ -80,7 +80,7 @@ const Shop = () => {
               <div>
                 <strong>{product.title}</strong>
               </div>
-              <div>${product.price}</div>
+              <div className="mt-2">${product.price}</div>
             </div>
           </div>
           <footer className="card-footer is-flex is-justify-content-space-between is-align-items-center">
