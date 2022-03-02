@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-const Shop = () => {
+const Shop = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  // const [cart, setCart] = useState([]);
 
   const sanitizeQuantity = (id) => {
     const quant = document.getElementById(id).value;
@@ -21,26 +22,11 @@ const Shop = () => {
     document.getElementById(id).value = '';
   };
 
-  const addToCart = (e) => {
+  const getProductForCart = (e) => {
     const productID = e.target.dataset.id;
-    const item = products[productID - 1];
-
-    const itemQuantity = sanitizeQuantity(productID);
-
-    if (cart.some((item) => item.id == productID)) {
-      setCart((prevState) =>
-        prevState.map((product) =>
-          product.id == productID
-            ? { ...product, quantity: product.quantity + itemQuantity }
-            : product
-        )
-      );
-    } else {
-      setCart((prevState) => [
-        ...prevState,
-        { id: item.id, title: item.title, price: item.price, quantity: itemQuantity }
-      ]);
-    }
+    const product = products[productID - 1];
+    const productQuantity = sanitizeQuantity(productID);
+    addToCart(product, productID, productQuantity);
   };
 
   useEffect(() => {
@@ -54,17 +40,15 @@ const Shop = () => {
   useEffect(() => {
     const btns = document.getElementsByClassName('addBtn');
     for (let index = 0; index < btns.length; index++) {
-      btns[index].addEventListener('click', addToCart);
+      btns[index].addEventListener('click', getProductForCart);
     }
 
     return () => {
       for (let index = 0; index < btns.length; index++) {
-        btns[index].removeEventListener('click', addToCart);
+        btns[index].removeEventListener('click', getProductForCart);
       }
     };
-  }, [addToCart]);
-
-  console.log(cart);
+  });
 
   return (
     <div className="columns is-multiline is-centered">
@@ -102,6 +86,10 @@ const Shop = () => {
       ))}
     </div>
   );
+};
+
+Shop.propTypes = {
+  addToCart: PropTypes.func
 };
 
 export default Shop;
