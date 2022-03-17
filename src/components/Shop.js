@@ -64,7 +64,7 @@ const Shop = ({ addToCart }) => {
                 <div>
                   <strong>{product.title}</strong>
                 </div>
-                <div className="mt-2">${product.price}</div>
+                <div className="mt-2">${Number(product.price).toFixed(2)}</div>
               </div>
             </div>
             <footer className="card-footer is-flex is-justify-content-space-between is-align-items-center">
