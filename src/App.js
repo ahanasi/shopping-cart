@@ -11,18 +11,33 @@ function App() {
   const [cartQuantity, setCartQuantity] = useState(0);
 
   const addToCart = (product, productID, productQuantity) => {
+    productQuantity = parseInt(productQuantity) || 0;
     if (cart.some((item) => item.id == productID)) {
       setCart((prevState) =>
         prevState.map((product) =>
           product.id == productID
-            ? { ...product, quantity: product.quantity + productQuantity }
-            : product
+            ? {
+                ...product,
+                quantity: product.quantity + productQuantity,
+                price: (product.unitPrice * product.quantity + productQuantity).toFixed(2)
+              }
+            : {
+                ...product,
+                price: (product.unitPrice * product.quantity).toFixed(2)
+              }
         )
       );
     } else {
       setCart((prevState) => [
         ...prevState,
-        { id: product.id, title: product.title, price: product.price, quantity: productQuantity }
+        {
+          id: product.id,
+          title: product.title,
+          unitPrice: product.price.toFixed(2),
+          price: (product.price * productQuantity).toFixed(2),
+          quantity: productQuantity,
+          imgURL: product.image
+        }
       ]);
     }
   };
@@ -41,7 +56,7 @@ function App() {
       <Nav cartQuantity={cartQuantity} />
       <Routes>
         <Route path="/" element={<Shop addToCart={addToCart} />} />
-        <Route path="cart" element={<Cart />} />
+        <Route path="cart" element={<Cart cart={cart} />} />
       </Routes>
     </div>
   );
