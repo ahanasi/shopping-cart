@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropType from 'prop-types';
 
 const Cart = ({ cart }) => {
+  const [cartTotal, setTotal] = useState(0);
+
+  useEffect(() => {
+    const calcTotal = () => {
+      const total = Object.keys(cart).reduce(function (total, product) {
+        return total + Number(cart[product].price);
+      }, 0);
+      setTotal(total.toFixed(2));
+    };
+    calcTotal();
+  });
+
   if (cart && Object.keys(cart).length === 0) {
     return (
       <div className="m-2 columns is-centered">
@@ -14,7 +26,7 @@ const Cart = ({ cart }) => {
         <div className="is-flex is-justify-content-end">
           <p className="is-size-6	is-italic	">Price</p>
         </div>
-        <hr className="m-2" />
+        <hr className="my-1" />
         {cart.reduce((all, product) => {
           if (product.quantity === 0) {
             return all;
@@ -46,6 +58,12 @@ const Cart = ({ cart }) => {
             </article>
           );
         }, [])}
+        <hr className="my-1" />
+        <div className="is-flex is-justify-content-end">
+          <p className="is-size-4">
+            Subtotal: <strong>${cartTotal}</strong>
+          </p>
+        </div>
       </div>
     );
   }
