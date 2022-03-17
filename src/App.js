@@ -11,6 +11,7 @@ function App() {
   const [cartQuantity, setCartQuantity] = useState(0);
 
   const addToCart = (product, productID, productQuantity) => {
+    if (productQuantity == 0) return;
     if (cart.some((item) => item.id == productID)) {
       setCart((prevState) =>
         prevState.map((product) =>
