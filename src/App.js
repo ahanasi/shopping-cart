@@ -11,7 +11,7 @@ function App() {
   const [cartQuantity, setCartQuantity] = useState(0);
 
   const addToCart = (product, productID, productQuantity) => {
-    productQuantity = parseInt(productQuantity) || 0;
+    console.log(productQuantity, typeof productQuantity);
     if (cart.some((item) => item.id == productID)) {
       setCart((prevState) =>
         prevState.map((product) =>
