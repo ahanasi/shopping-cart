@@ -11,7 +11,6 @@ function App() {
   const [cartQuantity, setCartQuantity] = useState(0);
 
   const addToCart = (product, productID, productQuantity) => {
-    console.log(productQuantity, typeof productQuantity);
     if (cart.some((item) => item.id == productID)) {
       setCart((prevState) =>
         prevState.map((product) =>
@@ -19,7 +18,7 @@ function App() {
             ? {
                 ...product,
                 quantity: product.quantity + productQuantity,
-                price: (product.unitPrice * product.quantity + productQuantity).toFixed(2)
+                price: (product.unitPrice * (product.quantity + productQuantity)).toFixed(2)
               }
             : {
                 ...product,

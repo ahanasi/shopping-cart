@@ -8,10 +8,10 @@ const Shop = ({ addToCart }) => {
     const quant = document.getElementById(id).value;
     let sanitizedInput;
 
-    if (Number(quant) <= 0) {
+    if (quant < 0) {
       sanitizedInput = 0;
     } else {
-      sanitizedInput = parseInt(quant);
+      sanitizedInput = Number(quant);
     }
     clearInput(id);
     return sanitizedInput;
