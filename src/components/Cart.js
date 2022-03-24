@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropType from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const Cart = ({ cart, removeItemFromCart }) => {
+const Cart = ({ cart, removeItemFromCart, incrementItem, decrementItem }) => {
   const [cartTotal, setTotal] = useState(0);
 
-  const getIDForRemoval = (e) => {
+  const getProductID = (e) => {
     const productID = e.target.dataset.id;
-    removeItemFromCart(productID);
+    if (e.target.classList.contains('delItem')) {
+      removeItemFromCart(productID);
+    } else if (e.target.classList.contains('incrementBtn')) {
+      incrementItem(productID);
+    } else {
+      decrementItem(productID);
+    }
   };
 
   useEffect(() => {
@@ -21,13 +29,20 @@ const Cart = ({ cart, removeItemFromCart }) => {
 
   useEffect(() => {
     const btns = document.getElementsByClassName('delItem');
+    const incrementBtns = document.getElementsByClassName('incrementBtn');
+    const decrementBtns = document.getElementsByClassName('decrementBtn');
+
     for (let index = 0; index < btns.length; index++) {
-      btns[index].addEventListener('click', getIDForRemoval);
+      btns[index].addEventListener('click', getProductID);
+      incrementBtns[index].addEventListener('click', getProductID);
+      decrementBtns[index].addEventListener('click', getProductID);
     }
 
     return () => {
       for (let index = 0; index < btns.length; index++) {
-        btns[index].removeEventListener('click', getIDForRemoval);
+        btns[index].removeEventListener('click', getProductID);
+        incrementBtns[index].removeEventListener('click', getProductID);
+        decrementBtns[index].removeEventListener('click', getProductID);
       }
     };
   });
@@ -60,12 +75,33 @@ const Cart = ({ cart, removeItemFromCart }) => {
                   <br />
                   <small className="has-text-success">In Stock</small>
                   <br />
-                  <div className="is-flex is-flex-direction-row is-align-items-center">
-                    Qty: {product.quantity} |
-                    <button className="button is-ghost is-small px-1 delItem" data-id={product.id}>
-                      Delete
-                    </button>
-                  </div>
+                  <nav className="level is-mobile">
+                    <div className="level-left">
+                      <p className="level-item">Qty:</p>
+                      <div className="level-item">
+                        <button
+                          className="button incrementBtn is-small is-ghost px-1"
+                          data-id={product.id}>
+                          <span className="icon is-small">
+                            <FontAwesomeIcon icon={faPlus} />
+                          </span>
+                        </button>
+                        <div className="px-2">{product.quantity}</div>
+                        <button
+                          className="button decrementBtn is-small is-ghost px-1"
+                          data-id={product.id}>
+                          <span className="icon is-small">
+                            <FontAwesomeIcon icon={faMinus} />
+                          </span>
+                        </button>
+                      </div>
+                      <button
+                        className="level-item button is-ghost is-small px-1 delItem"
+                        data-id={product.id}>
+                        Delete
+                      </button>
+                    </div>
+                  </nav>
                 </div>
               </div>
               <div className="media-right">
@@ -92,7 +128,9 @@ const Cart = ({ cart, removeItemFromCart }) => {
 
 Cart.propTypes = {
   cart: PropType.array,
-  removeItemFromCart: PropType.func
+  removeItemFromCart: PropType.func,
+  incrementItem: PropType.func,
+  decrementItem: PropType.func
 };
 
 export default Cart;
