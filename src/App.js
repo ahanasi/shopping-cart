@@ -42,6 +42,14 @@ function App() {
     }
   };
 
+  const removeItemFromCart = (productID) => {
+    const newCart = cart.filter((item) => {
+      return item.id != productID;
+    });
+    console.log(newCart);
+    setCart(newCart);
+  };
+
   useEffect(() => {
     const updateCartQuantity = () => {
       const sum = cart.reduce((a, { quantity }) => a + quantity, 0);
@@ -56,7 +64,7 @@ function App() {
       <Nav cartQuantity={cartQuantity} />
       <Routes>
         <Route path="/" element={<Shop addToCart={addToCart} />} />
-        <Route path="cart" element={<Cart cart={cart} />} />
+        <Route path="cart" element={<Cart cart={cart} removeItemFromCart={removeItemFromCart} />} />
       </Routes>
     </div>
   );

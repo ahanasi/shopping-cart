@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropType from 'prop-types';
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, removeItemFromCart }) => {
   const [cartTotal, setTotal] = useState(0);
+
+  const getIDForRemoval = (e) => {
+    const productID = e.target.dataset.id;
+    removeItemFromCart(productID);
+  };
 
   useEffect(() => {
     const calcTotal = () => {
@@ -12,6 +17,19 @@ const Cart = ({ cart }) => {
       setTotal(total.toFixed(2));
     };
     calcTotal();
+  });
+
+  useEffect(() => {
+    const btns = document.getElementsByClassName('delItem');
+    for (let index = 0; index < btns.length; index++) {
+      btns[index].addEventListener('click', getIDForRemoval);
+    }
+
+    return () => {
+      for (let index = 0; index < btns.length; index++) {
+        btns[index].removeEventListener('click', getIDForRemoval);
+      }
+    };
   });
 
   if (cart && Object.keys(cart).length === 0) {
@@ -38,13 +56,16 @@ const Cart = ({ cart }) => {
               </figure>
               <div className="media-content">
                 <div className="content">
-                  <p>
-                    <strong>{product.title}</strong>
-                    <br />
-                    <small className="has-text-success">In Stock</small>
-                    <br />
-                    Qty: {product.quantity}
-                  </p>
+                  <strong>{product.title}</strong>
+                  <br />
+                  <small className="has-text-success">In Stock</small>
+                  <br />
+                  <div className="is-flex is-flex-direction-row is-align-items-center">
+                    Qty: {product.quantity} |
+                    <button className="button is-ghost is-small px-1 delItem" data-id={product.id}>
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="media-right">
@@ -70,7 +91,8 @@ const Cart = ({ cart }) => {
 };
 
 Cart.propTypes = {
-  cart: PropType.array
+  cart: PropType.array,
+  removeItemFromCart: PropType.func
 };
 
 export default Cart;
