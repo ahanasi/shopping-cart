@@ -3,17 +3,21 @@ import PropType from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const Cart = ({ cart, removeItemFromCart, incrementItem, decrementItem }) => {
+const Cart = ({ cart, removeItemFromCart, changeItemQty }) => {
   const [cartTotal, setTotal] = useState(0);
 
   const getProductID = (e) => {
-    const productID = e.target.dataset.id;
-    if (e.target.classList.contains('delItem')) {
+    const selectedBtn = e.currentTarget;
+    const productID = selectedBtn.dataset.id;
+    if (selectedBtn.classList.contains('delItem')) {
       removeItemFromCart(productID);
-    } else if (e.target.classList.contains('incrementBtn')) {
-      incrementItem(productID);
+    } else if (selectedBtn.classList.contains('incrementBtn')) {
+      console.log(productID);
+      changeItemQty(productID, 1);
+    } else if (selectedBtn.classList.contains('decrementBtn')) {
+      changeItemQty(productID, -1);
     } else {
-      decrementItem(productID);
+      return;
     }
   };
 
@@ -47,7 +51,7 @@ const Cart = ({ cart, removeItemFromCart, incrementItem, decrementItem }) => {
     };
   });
 
-  if (cart && Object.keys(cart).length === 0) {
+  if (cartTotal == 0) {
     return (
       <div className="m-2 columns is-centered">
         <p className="is-size-3 title">Your shopping cart is empty!</p>
@@ -129,8 +133,7 @@ const Cart = ({ cart, removeItemFromCart, incrementItem, decrementItem }) => {
 Cart.propTypes = {
   cart: PropType.array,
   removeItemFromCart: PropType.func,
-  incrementItem: PropType.func,
-  decrementItem: PropType.func
+  changeItemQty: PropType.func
 };
 
 export default Cart;

@@ -28,6 +28,7 @@ function App() {
         )
       );
     } else {
+      if (productQuantity < 0) return;
       setCart((prevState) => [
         ...prevState,
         {
@@ -40,6 +41,12 @@ function App() {
         }
       ]);
     }
+  };
+
+  const changeItemQty = (productID, changeVal) => {
+    console.log(productID, changeVal);
+    const product = cart.filter((item) => item.id == productID);
+    addToCart(product, productID, changeVal);
   };
 
   const removeItemFromCart = (productID) => {
@@ -64,7 +71,16 @@ function App() {
       <Nav cartQuantity={cartQuantity} />
       <Routes>
         <Route path="/" element={<Shop addToCart={addToCart} />} />
-        <Route path="cart" element={<Cart cart={cart} removeItemFromCart={removeItemFromCart} />} />
+        <Route
+          path="cart"
+          element={
+            <Cart
+              cart={cart}
+              removeItemFromCart={removeItemFromCart}
+              changeItemQty={changeItemQty}
+            />
+          }
+        />
       </Routes>
     </div>
   );
