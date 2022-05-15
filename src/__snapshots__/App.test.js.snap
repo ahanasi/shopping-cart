@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Component full app rendering/navigating 1`] = `
+<div>
+  <div
+    class="App"
+  >
+    <nav
+      aria-label="main navigation"
+      class="navbar"
+      role="navigation"
+    >
+      <div
+        class="navbar-brand m-2"
+      >
+        <a
+          href="/"
+        >
+          <img
+            class="image is-64x64"
+            src="shop-logo.png"
+          />
+        </a>
+      </div>
+      <div
+        class="navbar-menu"
+      >
+        <div
+          class="navbar-end"
+        >
+          <div
+            class="navbar-item"
+          >
+            <a
+              href="/cart"
+            >
+               
+              <button
+                class="button is-warning"
+              >
+                Cart (
+                0
+                )
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div
+      class="columns is-multiline is-centered"
+    />
+  </div>
+</div>
+`;
