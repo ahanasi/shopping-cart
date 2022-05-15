@@ -7,7 +7,7 @@ const Nav = ({ cartQuantity }) => {
   return (
     <nav className="navbar" role={'navigation'} aria-label={'main navigation'}>
       <div className="navbar-brand m-2">
-        <Link to={'/'}>
+        <Link to={'/shopping-cart'}>
           <img src={BrandLogo} className="image is-64x64" />
         </Link>
       </div>
