@@ -70,7 +70,7 @@ function App() {
     <div className="App">
       <Nav cartQuantity={cartQuantity} />
       <Routes>
-        <Route path="/" element={<Shop addToCart={addToCart} />} />
+        <Route path="/shopping-cart" element={<Shop addToCart={addToCart} />} />
         <Route
           path="cart"
           element={
